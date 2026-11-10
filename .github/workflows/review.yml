@@ -1,0 +1,23 @@
+# Образец курса (45.1–45.2): ИИ-ревью каждого PR агентом Claude Code через шлюз платформы.
+# Секрет GATEWAY_KEY — ключ шлюза для CI. Агент пишет только комментарии: права — на чтение кода и запись в PR.
+name: review
+on:
+  pull_request:
+jobs:
+  review:
+    if: github.actor != 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v7
+      - uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.GATEWAY_KEY }}
+          # адрес шлюза и модель курса — по требованию платформы Ш13 (шлюз пускает только модель курса)
+          settings: |
+            {"env": {"ANTHROPIC_BASE_URL": "https://<адрес шлюза курса>", "ANTHROPIC_MODEL": "claude-course-fast"}}
+          prompt: |
+            Проведи ревью этого Pull Request в библиотеке translit: файлы алфавитов в alphabets/, настройка, README.
+            Замечания — комментариями к строкам; код в src/ — от курса, его не обсуждай.
