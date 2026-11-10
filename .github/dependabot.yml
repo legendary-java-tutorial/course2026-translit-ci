@@ -1,0 +1,15 @@
+# Готовый файл курса (43.1): Dependabot раз в неделю проверяет версии пакетов npm и готовых actions.
+# Мажорные версии (6 → 7) не предлагаются: они ломают сборку чаще всего.
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
