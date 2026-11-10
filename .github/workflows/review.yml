@@ -15,6 +15,8 @@ jobs:
       - uses: anthropics/claude-code-action@v1
         with:
           anthropic_api_key: ${{ secrets.GATEWAY_KEY }}
+          # токен workflow: без него action ищет приложение Anthropic на GitHub (OIDC, id-token)
+          github_token: ${{ github.token }}
           # адрес шлюза и модель курса — по требованию платформы Ш13 (шлюз пускает только модель курса)
           settings: |
             {"env": {"ANTHROPIC_BASE_URL": "https://<адрес шлюза курса>", "ANTHROPIC_MODEL": "claude-course-fast"}}
