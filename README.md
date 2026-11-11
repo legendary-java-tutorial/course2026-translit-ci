@@ -51,3 +51,4 @@ npm test
 ## Лицензия
 
 MIT — файл `LICENSE`.
+
