@@ -5,6 +5,11 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+# Одна выкладка за раз: второй push, пока идёт первая, ждёт её — без этого deploy падает
+# «Deployment request failed … due to in progress deployment» (как в стартовом workflow Pages от GitHub)
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 jobs:
   build:
     runs-on: ubuntu-latest
